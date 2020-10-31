@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>menv</AssemblyName>
+    <RootNamespace>GraGadGet.Menv</RootNamespace>
+    <Copyright>Hiroaki ENDOH</Copyright>
+    <Description>menv is a command that provides environment variables for Autodesk Maya.</Description>
+    <RepositoryUrl>https://github.com/GraGadGet/menv.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/GraGadGet/menv.git</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConsoleAppFramework" Version="3.2.0" />
+  </ItemGroup>
+
+</Project>
