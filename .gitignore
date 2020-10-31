@@ -6,3 +6,6 @@
 .vs/
 
 [Bb]uild/
+
+.DS_Store
+._.DS_Store
