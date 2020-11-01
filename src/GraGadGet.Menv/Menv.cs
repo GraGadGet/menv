@@ -24,13 +24,14 @@ namespace GraGadGet.Menv
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                //Console.WriteLine($"{batchStdErr}");
+                Console.WriteLine($"{batchStdErr}");
             } 
             else
             {
                 Console.WriteLine($"{batchStdOut}");
             }
-            Console.WriteLine($"{batchStdErr}");
+            // Console.WriteLine($"STDOUT: {batchStdOut}");
+            // Console.WriteLine($"STDERR: {batchStdErr}");
             // Console.WriteLine($"[DEBUG] StdOut {batchStdOut}");
             // Console.WriteLine($"[DEBUG] StdErr {batchStdErr}");
             // Console.WriteLine($"[DEBUG] Status {batchExitCode}");            

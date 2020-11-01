@@ -36,8 +36,8 @@ namespace GraGadGet.Menv
             
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                application = Terminal.Bash;
-                command = $"-c {Application.Batch()} -command {mel}";
+                application = Application.Batch();
+                command = string.Format(@"-command ""{0}"" -noAutoloadPlugins", mel);
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -48,8 +48,7 @@ namespace GraGadGet.Menv
             {
                 throw new NotImplementedException();
             }
-
-            Console.WriteLine($"[DEBUG] {command}");
+            // Console.WriteLine($"[DEBUG] {command}");
 
             return new ProcessStartInfo(application, command);
         }
