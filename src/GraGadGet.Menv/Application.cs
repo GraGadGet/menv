@@ -22,6 +22,39 @@ namespace GraGadGet.Menv
         }
     }
 
+    public class MelProcess
+    {
+        public static void Run(string mel, out string stdOut, out string stdErr, out int exitCode)
+        {
+            stdOut = "";
+            stdErr = "";
+            exitCode = 0;
+
+            try
+            {
+                ProcessStartInfo processStartInfo = ProcessStartInfoFactory.Mel(mel);
+                processStartInfo.RedirectStandardOutput = true;
+                processStartInfo.RedirectStandardError = true;
+                processStartInfo.CreateNoWindow = true;
+                processStartInfo.UseShellExecute = false;
+
+                using (Process process = new Process())
+                {
+                    process.StartInfo = processStartInfo;
+                    process.Start();
+
+                    stdOut = process.StandardOutput.ReadToEnd();
+                    stdErr = process.StandardError.ReadToEnd();
+                    exitCode = process.ExitCode;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+
     public static class ProcessStartInfoFactory
     {
         /// <summary>

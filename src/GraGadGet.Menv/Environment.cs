@@ -1,52 +1,69 @@
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace GraGadGet.Menv
 {
     public static class Environment
     {
-        public static int ReadPluginsPath(out string stdOut, out string stdErr, out int exitCode)
+        public static string ReadPluginPath()
         {
-            // Windows 
-            // "%PROGRAMFILES%\Autodesk\Maya2020\bin\mayabatch" -batch -command "print(getenv(\"MAYA_PLUG_IN_PATH\"))" -noAutoloadPlugins
-            // "/c \"%PROGRAMFILES%\\Autodesk\\Maya2020\\bin\\mayabatch\" -batch -command 'print(getenv(\\\"MAYA_PLUG_IN_PATH\\\"))' -noAutoloadPlugins" 
-            //
-            // macOS
-            // /bin/bash -c '/Applications/Autodesk/maya2020/Maya.app/Contents/bin/mayabatch -command "print(getenv(\"MAYA_PLUG_IN_PATH\"))" -noAutoloadPlugins';            
-            // var application = "/bin/bash";
-            // var command = $"-c \"/Applications/Autodesk/maya2020/Maya.app/Contents/bin/mayabatch -command {mel}\"";
-
-            stdOut = "";
-            stdErr = "";
-            exitCode = 0;
-
-            // var mel = "'print(getenv(\\\"MAYA_PLUG_IN_PATH\\\"))' -noAutoloadPlugins";
             var mel = @"print(getenv(""""MAYA_PLUG_IN_PATH""""))";
+            return ExecuteMel(mel);
+        }
 
+        public static string ReadModulePath()
+        {
+            var mel = @"print(getenv(""""MAYA_MODULE_PATH""""))";
+            return ExecuteMel(mel);
+        }
+
+        public static string ReadScriptPath()
+        {
+            var mel = @"print(getenv(""""MAYA_SCRIPT_PATH""""))";
+            return ExecuteMel(mel);
+        }
+
+        public static string ReadPresetPath()
+        {
+            var mel = @"print(getenv(""""MAYA_PRESET_PATH""""))";
+            return ExecuteMel(mel);
+        }
+
+        public static string ReadLocationPath()
+        {
+            var mel = @"print(getenv(""""MAYA_LOCATION""""))";
+            return ExecuteMel(mel);
+        }
+
+        public static string ReadAppDirPath()
+        {
+            var mel = @"print(getenv(""""MAYA_APP_DIR""""))";
+            return ExecuteMel(mel);
+        }
+
+        private static string ExecuteMel(string mel)
+        {
             try
             {
-                ProcessStartInfo processStartInfo = ProcessStartInfoFactory.Mel(mel);               
-                processStartInfo.RedirectStandardOutput = true;
-                processStartInfo.RedirectStandardError = true;
-                processStartInfo.CreateNoWindow = true;
-                processStartInfo.UseShellExecute = false;
+                var stdOut = "";
+                var stdErr = "";
+                var exitCode = 0;
 
-                Process process = new Process();
-                process = Process.Start(processStartInfo);
-                process.WaitForExit();
-
-                stdOut = process.StandardOutput.ReadToEnd();
-                stdErr = process.StandardError.ReadToEnd();
-                exitCode = process.ExitCode;
-
-                process.Close();
-
-                return 0;
+                MelProcess.Run(mel, out stdOut, out stdErr, out exitCode);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    return stdErr;
+                }
+                else
+                {
+                    return stdOut;
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] {ex.ToString()}");
-                return -1;
+                return "";
             }
         }
     }
