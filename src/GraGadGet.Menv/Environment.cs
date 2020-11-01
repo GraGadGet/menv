@@ -1,6 +1,7 @@
 using System;
-using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace GraGadGet.Menv
 {
@@ -54,6 +55,23 @@ namespace GraGadGet.Menv
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
                     return stdErr;
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    var lines = new List<string> { };
+                    using (StringReader reader = new StringReader(stdOut))
+                    {
+                        while (reader.Peek() > -1)
+                        {
+                            var line = reader.ReadLine();
+                            lines.Add(line);
+                        }
+                    }
+                    if (lines.Count >= 2)
+                    {
+                        stdOut = lines[2];
+                    }
+                    return stdOut;
                 }
                 else
                 {
