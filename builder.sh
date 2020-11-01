@@ -27,7 +27,7 @@ parse_args() {
 
 os_type() {
     if [ "$COMSPEC" == "" ]; then
-        case ${uname} in
+        case `uname` in
             "Darwin")
                 echo "macOS"
                 ;;          
