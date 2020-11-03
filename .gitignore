@@ -4,6 +4,7 @@
 [Rr]elease/
 
 .vs/
+*.user
 launchSettings.json
 
 [Bb]uild/
