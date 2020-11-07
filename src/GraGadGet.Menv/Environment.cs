@@ -5,78 +5,126 @@ using System.Collections.Generic;
 
 namespace GraGadGet.Menv
 {
+    /// <summary>
+    /// Provide values for Maya environment variables.
+    /// </summary>
     public static class Environment
     {
-        public static string ReadPluginPath()
+        /// <summary>
+        /// Read value of MAYA_PLUG_IN_PATH.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadPluginPath(string version)
         {
             var mel = @"print(getenv(""""MAYA_PLUG_IN_PATH""""))";
-            return ExecuteMel(mel);
+            return ExecuteMel(mel, version);
         }
 
-        public static string ReadModulePath()
+        /// <summary>
+        /// Read value of MAYA_MODULE_PATH.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadModulePath(string version)
         {
             var mel = @"print(getenv(""""MAYA_MODULE_PATH""""))";
-            return ExecuteMel(mel);
+            return ExecuteMel(mel, version);
         }
 
-        public static string ReadScriptPath()
+        /// <summary>
+        /// Read value of MAYA_SCRIPT_PATH.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadScriptPath(string version)
         {
             var mel = @"print(getenv(""""MAYA_SCRIPT_PATH""""))";
-            return ExecuteMel(mel);
+            return ExecuteMel(mel, version);
         }
 
-        public static string ReadPresetPath()
+        /// <summary>
+        /// Read value of MAYA_PRESET_PATH.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadPresetPath(string version)
         {
             var mel = @"print(getenv(""""MAYA_PRESET_PATH""""))";
-            return ExecuteMel(mel);
+            return ExecuteMel(mel, version);
         }
 
-        public static string ReadLocationPath()
+        /// <summary>
+        /// Read value of MAYA_LOCATION.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadLocationPath(string version)
         {
             var mel = @"print(getenv(""""MAYA_LOCATION""""))";
-            return ExecuteMel(mel);
+            return ExecuteMel(mel, version);
         }
 
-        public static string ReadAppDirPath()
+        /// <summary>
+        /// Read value of MAYA_APP_DIR.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadAppDirPath(string version)
         {
             var mel = @"print(getenv(""""MAYA_APP_DIR""""))";
-            return ExecuteMel(mel);
+            return ExecuteMel(mel, version);
         }
 
-        private static string ExecuteMel(string mel)
+        /// <summary>
+        /// Execute the MEL command.
+        /// </summary>
+        /// <param name="mel"></param>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        private static string ExecuteMel(string mel, string version)
         {
             try
             {
-                var stdOut = "";
-                var stdErr = "";
+                var stdOut = string.Empty;
+                var stdErr = string.Empty;
                 var exitCode = 0;
 
-                MelProcess.Run(mel, out stdOut, out stdErr, out exitCode);
+                MelProcess.Run(mel, version, out stdOut, out stdErr, out exitCode);
+
+                var result = string.Empty;
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
-                    return stdErr;
+                    result = stdErr;
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    var lines = new List<string> { };
-                    using (StringReader reader = new StringReader(stdOut))
+                    result = stdOut;
+                }
+
+                var lines = new List<string> { };
+                using (StringReader reader = new StringReader(result))
+                {
+                    while (reader.Peek() > -1)
                     {
-                        while (reader.Peek() > -1)
+                        var line = reader.ReadLine();
+                        if (!string.IsNullOrEmpty(line))
                         {
-                            var line = reader.ReadLine();
                             lines.Add(line);
                         }
                     }
+                }
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
                     if (lines.Count >= 2)
                     {
-                        stdOut = lines[2];
+                        result = lines[2];
                     }
-                    return stdOut;
+                    return result;
                 }
-                else
-                {
-                    return stdOut;
-                }
+
+                return result;
             }
             catch (Exception ex)
             {

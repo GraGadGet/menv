@@ -7,7 +7,7 @@ using ConsoleAppFramework;
 namespace GraGadGet.Menv
 {
     /// <summary>
-    /// menv command interface
+    /// menv command interface.
     /// </summary>
     class Menv : ConsoleAppBase
     {
@@ -16,10 +16,17 @@ namespace GraGadGet.Menv
             await Host.CreateDefaultBuilder().RunConsoleAppFrameworkAsync<Menv>(args);
         }
 
+        /// <summary>
+        /// Display MAYA_PLUG_IN_PATH value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
         [Command("plugin", "Display MAYA_PLUG_IN_PATH.")]
-        public void PrintPluginsPath(string hoge = "", [Option("fmt", "Output format (json or plain or raw)")] string format = "json")
+        public void PrintPluginsPath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
         {
-            var result = Environment.ReadPluginPath();
+            var result = Environment.ReadPluginPath(version);
 
             List<string> elements = OutputFormatter.Format(format, result);
             foreach (var element in elements)
@@ -28,10 +35,17 @@ namespace GraGadGet.Menv
             }
         }
 
+        /// <summary>
+        /// Display MAYA_MODULE_PATH value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
         [Command("module", "Display MAYA_MODULE_PATH.")]
-        public void PrintModulePath([Option("fmt", "Output format (json or plain or raw)")] string format = "json")
+        public void PrintModulePath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
         {
-            var result = Environment.ReadModulePath();
+            var result = Environment.ReadModulePath(version);
 
             List<string> elements = OutputFormatter.Format(format, result);
             foreach (var element in elements)
@@ -40,10 +54,17 @@ namespace GraGadGet.Menv
             }
         }
 
+        /// <summary>
+        /// Display MAYA_SCRIPT_PATH value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
         [Command("script", "Display MAYA_SCRIPT_PATH.")]
-        public void PrintScriptPath([Option("fmt", "Output format (json or plain or raw)")] string format = "json")
+        public void PrintScriptPath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
         {
-            var result = Environment.ReadScriptPath();
+            var result = Environment.ReadScriptPath(version);
 
             List<string> elements = OutputFormatter.Format(format, result);
             foreach (var element in elements)
@@ -52,10 +73,17 @@ namespace GraGadGet.Menv
             }
         }
 
+        /// <summary>
+        /// Display MAYA_PRESET_PATH value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
         [Command("preset", "Display MAYA_PRESET_PATH.")]
-        public void PrintPresetPath([Option("fmt", "Output format (json or plain or raw)")] string format = "json")
+        public void PrintPresetPath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
         {
-            var result = Environment.ReadPresetPath();
+            var result = Environment.ReadPresetPath(version);
 
             List<string> elements = OutputFormatter.Format(format, result);
             foreach (var element in elements)
@@ -64,10 +92,17 @@ namespace GraGadGet.Menv
             }
         }
 
+        /// <summary>
+        /// Display MAYA_LOCATION value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
         [Command("location", "Display MAYA_LOCATION.")]
-        public void PrintLocationPath([Option("fmt", "Output format (json or plain or raw)")] string format = "json")
+        public void PrintLocationPath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
         {
-            var result = Environment.ReadLocationPath();
+            var result = Environment.ReadLocationPath(version);
 
             List<string> elements = OutputFormatter.Format(format, result);
             foreach (var element in elements)
@@ -76,10 +111,17 @@ namespace GraGadGet.Menv
             }
         }
 
+        /// <summary>
+        /// Display MAYA_APP_DIR value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
         [Command("appdir", "Display MAYA_APP_DIR.")]
-        public void PrintAppDirPath([Option("fmt", "Output format (json or plain or raw)")] string format = "json")
+        public void PrintAppDirPath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
         {
-            var result = Environment.ReadAppDirPath();
+            var result = Environment.ReadAppDirPath(version);
 
             List<string> elements = OutputFormatter.Format(format, result);
             foreach (var element in elements)
