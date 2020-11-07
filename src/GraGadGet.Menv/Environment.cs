@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraGadGet.Menv
 {
@@ -97,7 +98,7 @@ namespace GraGadGet.Menv
                 {
                     result = stdErr;
                 }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                else
                 {
                     result = stdOut;
                 }
@@ -117,11 +118,7 @@ namespace GraGadGet.Menv
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    if (lines.Count >= 2)
-                    {
-                        result = lines[2];
-                    }
-                    return result;
+                    return lines.LastOrDefault();
                 }
 
                 return result;
