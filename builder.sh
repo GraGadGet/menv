@@ -31,6 +31,9 @@ os_type() {
             "Darwin")
                 echo "macOS"
                 ;;          
+            "Linux")
+                echo "Linux"
+                ;;          
             *)
                 echo "Unsupported"
                 ;;    
@@ -49,7 +52,7 @@ os_type() {
 }
 
 build() {
-    if [ `os_type` == "macOS" ]; then
+    if [ `os_type` == "macOS" ] || [ `os_type` == "Linux" ]; then
         dotnet build $menv_csproj
     elif [ `os_type` == "MINGW" ] || [ `os_type` == "MSYS" ] || [ `os_type` == "CYGWIN" ]; then
         "`cygpath "C:\Program Files\dotnet/dotnet.exe"`" build $menv_csproj
@@ -59,7 +62,7 @@ build() {
 }
 
 publish() {
-    if [ `os_type` == "macOS" ]; then
+    if [ `os_type` == "macOS" ] || [ `os_type` == "Linux" ]; then
         dotnet publish $menv_csproj -c Release -r osx-x64 /p:PublishSingleFile=true -o ./build/osx-x64
         dotnet publish $menv_csproj -c Release -r win-x64 /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true -o ./build/win-x64
         dotnet publish $menv_csproj -c Release -r linux-x64 /p:PublishSingleFile=true -o ./build/linux-x64
