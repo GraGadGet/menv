@@ -1,0 +1,102 @@
+* menv
+
+menv is a command that provides environment variables for Autodesk Maya.
+
+* Requirement
+
+Maya
+
+- 2018 and later
+
+OS
+
+- macOS Catalina and later
+- Linux
+  - CentOS 8 and later
+- Windows 10 and later
+
+.NET
+
+- [[https://dotnet.microsoft.com/download][.NET v5]]
+
+* Usage
+
+Display command help.
+
+#+begin_src sh
+$ menv
+Usage: menv <Command>
+
+Commands:
+  plugin      Display MAYA_PLUG_IN_PATH.
+  module      Display MAYA_MODULE_PATH.
+  script      Display MAYA_SCRIPT_PATH.
+  preset      Display MAYA_PRESET_PATH.
+  location    Display MAYA_LOCATION.
+  appdir      Display MAYA_APP_DIR.
+  help        Display help.
+  version     Display version.
+#+end_src
+
+** Example - Display MAYA_PLUG_IN_PATH
+
+If you'll get MAYA_PLUG_IN_PATH, type to following command:
+
+#+begin_src sh
+$ menv plugin -v 2020 | jq .
+[
+  "/Users/GraGadGet/Library/Preferences/Autodesk/maya/2020/plug-ins",
+  "/Users/GraGadGet/Library/Preferences/Autodesk/maya/plug-ins",
+  "/Users/Shared/Autodesk/maya/2020/plug-ins",
+  "/Users/Shared/Autodesk/maya/plug-ins",
+  "/Applications/Autodesk/maya2020/Maya.app/Contents/MacOS/plug-ins",
+  "/Applications/Autodesk/bifrost/maya2020/2.0.5.1/bifrost/plug-ins",
+  "/Applications/Autodesk/maya2020/plug-ins/MASH/plug-ins",
+  "/Users/Shared/Autodesk/ApplicationAddins/QuadRemesher1.1/Contents/plug-ins",
+  "/Applications/Pixar/RenderManForMaya-23.3/plug-ins",
+  "/Applications/Rokoko Motion Library/maya/2020/plug-ins",
+  "/Users/Shared/Autodesk/ApplicationAddins/MayaScanner/Contents/plug-ins",
+  "/Users/GraGadGet/Library/Preferences/Autodesk/maya/modules/UnityMeshSync/2020/plug-ins",
+  "/Applications/Autodesk/maya2020/plug-ins/fbx/plug-ins",
+  "/Applications/Autodesk/maya2020/plug-ins/camd/plug-ins",
+  "/Applications/Autodesk/Arnold/mtoa/2020/plug-ins",
+  "/Applications/Substance in Maya/2020/plug-ins",
+  "/Applications/Autodesk/bifrost/maya2020/2.0.5.1/vnn/plug-ins",
+  "/Applications/Autodesk/maya2020/plug-ins/xgen/plug-ins",
+  ""
+]
+#+end_src
+
+The output format can be specified with the ~fmt~ argument. 
+
+- fmt
+  - Selectable json or plain or raw.
+  - Default format is json.
+
+#+begin_src sh
+$ menv plugin -v 2020 -fmt plain
+/Users/GraGadGet/Library/Preferences/Autodesk/maya/2020/plug-ins
+/Users/GraGadGet/Library/Preferences/Autodesk/maya/plug-ins
+/Users/Shared/Autodesk/maya/2020/plug-ins
+/Users/Shared/Autodesk/maya/plug-ins
+:
+:
+:
+#+end_src
+
+* How to build
+
+The following shell script will output ~menv~ to ~./build~ directory.
+
+#+begin_src sh
+sh ./builder.sh publish
+#+end_src
+
+* Contributing
+
+Pull Request are always welcome.  
+Shall we enjoy social coding!
+
+* License
+
+Licensed under the [[./LICENSE][Apache-2.0 License]].
