@@ -66,7 +66,8 @@ namespace GraGadGet.Menv
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                throw new NotImplementedException();
+                application = Application.Batch(version);
+                command = string.Format(@"-batch -command ""{0}"" -noAutoloadPlugins", mel);
             }
             // Console.WriteLine($"[DEBUG] {command}");
 
@@ -87,6 +88,7 @@ namespace GraGadGet.Menv
     {
         /// <summary>
         /// Returns Maya batch program path.
+        /// <see href="https://knowledge.autodesk.com/support/maya/learn-explore/caas/CloudHelp/cloudhelp/2020/ENU/Maya-GettingStarted/files/GUID-2E5D1D43-DC3D-4CB2-9A35-757598220F22-htm.html">Start Maya from the command line | Maya 2020 | Autodesk Knowledge Network</see>
         /// </summary>
         /// <returns></returns>
         public static string Batch(string version = null)
@@ -114,7 +116,9 @@ namespace GraGadGet.Menv
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                path = string.Empty;
+                // e.g. "/usr/local/bin/maya", "/usr/autodesk/maya2018/bin/"
+                var mayaVersion = $"maya{version}";
+                path = Path.Join("/", "usr", "autodesk", mayaVersion, "bin", "maya");
             }
 
             return path;

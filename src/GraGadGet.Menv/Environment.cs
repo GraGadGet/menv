@@ -94,7 +94,7 @@ namespace GraGadGet.Menv
                 MelProcess.Run(mel, version, out stdOut, out stdErr, out exitCode);
 
                 var result = string.Empty;
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
                     result = stdErr;
                 }
@@ -103,6 +103,7 @@ namespace GraGadGet.Menv
                     result = stdOut;
                 }
 
+                // Cutting RETURN CODE on first line.
                 var lines = new List<string> { };
                 using (StringReader reader = new StringReader(result))
                 {
@@ -116,7 +117,8 @@ namespace GraGadGet.Menv
                     }
                 }
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                // Cutting "Result: untitled" text.
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
                     return lines.LastOrDefault();
                 }
