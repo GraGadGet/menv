@@ -76,6 +76,18 @@ namespace GraGadGet.Menv
             var mel = @"print(getenv(""""PYTHONPATH""""))";
             return ExecuteMel(mel, version);
         }
+
+        /// <summary>
+        /// Read value of XBMLANGPATH.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadXbmlangPath(string version)
+        {
+            var mel = @"print(getenv(""""XBMLANGPATH""""))";
+            return ExecuteMel(mel, version);
+        }
+
         /// <summary>
         /// Read value of MAYA_LOCATION.
         /// </summary>

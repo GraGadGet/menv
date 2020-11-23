@@ -150,6 +150,25 @@ namespace GraGadGet.Menv
         }
 
         /// <summary>
+        /// Display XBMLANGPATH value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
+        [Command("xbmlang", "Display XBMLANGPATH.")]
+        private void PrintXbmlangPath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
+        {
+            var result = Environment.ReadXbmlangPath(version);
+
+            List<string> elements = OutputFormatter.Format(format, result);
+            foreach (var element in elements)
+            {
+                Console.WriteLine(element);
+            }
+        } 
+
+        /// <summary>
         /// Display PYTHONPATH value.
         /// </summary>
         /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
