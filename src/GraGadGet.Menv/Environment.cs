@@ -56,6 +56,17 @@ namespace GraGadGet.Menv
         }
 
         /// <summary>
+        /// Read value of MAYA_SHELF_PATH.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020)</param>
+        /// <returns></returns>
+        public static string ReadShelfPath(string version)
+        {
+            var mel = @"print(getenv(""""MAYA_SHELF_PATH""""))";
+            return ExecuteMel(mel, version);
+        }
+
+        /// <summary>
         /// Read value of MAYA_LOCATION.
         /// </summary>
         /// <param name="version">Maya version (e.g., 2020)</param>
