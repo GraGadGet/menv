@@ -148,5 +148,24 @@ namespace GraGadGet.Menv
                 Console.WriteLine(element);
             }
         }
+
+        /// <summary>
+        /// Display PYTHONPATH value.
+        /// </summary>
+        /// <param name="version">Maya version (e.g., 2020, 2019, 2018)</param>
+        /// <param name="format">Output format style (json or plain or raw)</param>
+        [Command("python", "Display PYTHONPATH.")]
+        private void PrintPythonPath(
+            [Option("v", "Maya version (e.g., 2020, 2019, 2018)")] string version,
+            [Option("fmt", "Output format style (json or plain or raw)")] string format = "json")
+        {
+            var result = Environment.ReadPythonPath(version);
+
+            List<string> elements = OutputFormatter.Format(format, result);
+            foreach (var element in elements)
+            {
+                Console.WriteLine(element);
+            }
+        }        
     }
 }
